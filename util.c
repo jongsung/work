@@ -4,7 +4,8 @@
 
 
 #define STR_LEN 200
-
+#define FAILED -1
+#define OK      0
 
 int LinearSearch(int ar[], int len, int target);
 int test_LinearSearch(void);
@@ -25,6 +26,9 @@ int BubbleSortString(char (*array)[STR_LEN], int len);
 int test_BubbleSortString(void);
 int test_BubbleSortString2(void);
 
+int SumOfArray(int (*pArr)[3], int size);
+int test_SumOfArray();
+
 int test(void);
 
 int main(void)
@@ -34,8 +38,9 @@ int main(void)
     //test_DecToBin();
     //test_Divisor();
     //test_BubbleSort();
-    test_BubbleSortString();
-    test_BubbleSortString2();
+    //test_BubbleSortString();
+    //test_BubbleSortString2();
+    test_SumOfArray();
     //test();
     
     return 0;
@@ -362,6 +367,37 @@ int test_BubbleSortString2(void)
     }
     
     return 0;
+}
+
+int SumOfArray(int (*pArr)[3], int size)
+{
+    int i, j;
+    int sum = 0;
+    
+    for(i=0; i<size ; i++)
+    {
+        for(j=0; j<3 ; j++)
+        {
+            sum = sum + pArr[i][j];
+            printf("sum = %d\n", sum);
+        }
+    }   
+    
+    return sum;
+}
+
+int test_SumOfArray()
+{
+    int array[2][3] = {1,2, 3,4, 5,6};
+    int result = 0;
+    
+    printf("%s, %d\n", __FUNCTION__, __LINE__);
+    //printf("size = %d\n", sizeof(array)/sizeof(int)/3);
+    result = SumOfArray(array, sizeof(array)/sizeof(int)/3);
+    
+    printf("result = %d\n", result);
+    
+    return OK;
 }
 
 
