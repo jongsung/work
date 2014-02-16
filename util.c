@@ -29,6 +29,12 @@ int test_BubbleSortString2(void);
 int SumOfArray(int (*pArr)[3], int size);
 int test_SumOfArray();
 
+int strLen(char *pStr);
+int strCpy(char *pDest, char *pSource);
+int strCat(char *pDest, char *pSource);
+int strCmp(char *pStr1, char *pStr2);
+int test_String(void);
+
 int test(void);
 
 int main(void)
@@ -40,7 +46,8 @@ int main(void)
     //test_BubbleSort();
     //test_BubbleSortString();
     //test_BubbleSortString2();
-    test_SumOfArray();
+    //test_SumOfArray();
+    test_String();
     //test();
     
     return 0;
@@ -398,6 +405,57 @@ int test_SumOfArray()
     printf("result = %d\n", result);
     
     return OK;
+}
+
+
+int strLen(char *pStr)
+{
+    int len = 0;
+
+    while(*pStr != 0)
+    {
+        len++;
+        pStr++;
+    }
+
+    return len;
+}
+
+int strCpy(char *pDest, char *pSource)
+{
+    int i = 0;
+    int len = strLen(pSource) + 1;
+    
+    for(i=0; i<len ; i++)
+    {
+        pDest[i] = pSource[i];
+    }
+    
+    return len-1;
+}
+
+int strCat(char *pDest, char *pSource)
+{
+
+}
+
+int strCmp(char *pStr1, char *pStr2)
+{
+
+}
+
+int test_String(void)
+{
+    char str1[STR_LEN] = "1234567890";
+    char str2[STR_LEN] = "12345";
+    char tmpStr[STR_LEN];
+    int len = 0;
+    
+    printf("length of \"%s\" : %d\n", str1, strLen(str1));
+    printf("length of \"%s\" : %d\n", str2, strLen(str2));
+    
+    len = strCpy(tmpStr, str1);
+    printf("tmp = %s, len=%d\n", tmpStr, len);
 }
 
 
