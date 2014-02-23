@@ -35,6 +35,9 @@ int strCat(char *pDest, char *pSource);
 int strCmp(char *pStr1, char *pStr2);
 int test_String(void);
 
+int strToken(char *string, char *delim);
+int test_strToken(void);
+
 int test(void);
 
 int main(void)
@@ -48,10 +51,12 @@ int main(void)
     //test_BubbleSortString2();
     //test_SumOfArray();
     test_String();
+    //test_strToken();
     //test();
     
     return 0;
 }
+
 
 
 
@@ -436,12 +441,36 @@ int strCpy(char *pDest, char *pSource)
 
 int strCat(char *pDest, char *pSource)
 {
+    int destLen = strLen(pDest);
+    int srcLen = strLen(pSource);
+    
+    int i;
+    
+    for(i=0 ; i<srcLen+1 ; i++)
+    {
+        pDest[destLen+i] = pSource[i];
+    }
 
+    return destLen + srcLen;
 }
 
 int strCmp(char *pStr1, char *pStr2)
 {
-
+    while((*pStr1) != 0 || (*pStr2) != 0)
+    {
+        if(*pStr1 > *pStr2)
+            return 1;
+        else if(*pStr1 < *pStr2)
+            return -1;
+        else
+        {
+            pStr1++;
+            pStr2++;
+            continue;
+        }
+    }
+    
+    return 0;
 }
 
 int test_String(void)
@@ -456,7 +485,50 @@ int test_String(void)
     
     len = strCpy(tmpStr, str1);
     printf("tmp = %s, len=%d\n", tmpStr, len);
+    
+    memset(tmpStr, 0, strlen(tmpStr));
+    
+    strCpy(tmpStr, str1);
+    printf("tmpStr after strCpy: %s\n", tmpStr);
+    
+    strCat(tmpStr, str2);
+    printf("tmpStr after strCat: %s\n", tmpStr);
+    
+
+    return 0;
 }
+
+
+int strToken(char *string, char *delim)
+{
+   char *token;
+ 
+   // Establish string and get the first token:
+   token = strtok(string, delim); // C4996
+   // Note: strtok is deprecated; consider using strtok_s instead
+   while(token != NULL)
+   {
+      // While there are tokens in "string"
+      printf(" %s\n", token);
+
+      // Get next token: 
+      token = strtok(NULL, delim); // C4996
+   }
+
+   return 0;
+}
+
+
+int test_strToken(void)
+{
+    char string[] = "A string\tof ,,tokens\nand some  more tokens";
+    char delim[]   = " ,\t\n";
+
+    strToken(string, delim);
+    
+    return 0;
+}
+
 
 
 int test(void)
