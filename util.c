@@ -38,6 +38,9 @@ int test_String(void);
 int strToken(char *string, char *delim);
 int test_strToken(void);
 
+int Factorial(int n);
+int testFactorial(void);
+
 int test(void);
 
 int main(void)
@@ -50,9 +53,11 @@ int main(void)
     //test_BubbleSortString();
     //test_BubbleSortString2();
     //test_SumOfArray();
-    test_String();
+    //test_String();
     //test_strToken();
     //test();
+    
+    testFactorial();
     
     return 0;
 }
@@ -525,6 +530,27 @@ int test_strToken(void)
     char delim[]   = " ,\t\n";
 
     strToken(string, delim);
+    
+    return 0;
+}
+
+int Factorial(int n)
+{
+    if(n <= 1) 
+    {
+        return 1;
+    }
+    
+    return (n * Factorial(n-1));
+}
+
+int testFactorial(void)
+{
+    int n = 5;
+    int result = 0;
+    
+    result = Factorial(n);
+    printf("%d factorial is %d\n", n, result);
     
     return 0;
 }
