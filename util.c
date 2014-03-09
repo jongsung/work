@@ -38,8 +38,14 @@ int test_String(void);
 int strToken(char *string, char *delim);
 int test_strToken(void);
 
+int ExtendMemForString(char **pStr, int strLen);
+int test_ExtendMemForString(void);
+
 int Factorial(int n);
 int testFactorial(void);
+
+int bookInfoStruct(void);
+int test_bookInfo(void);
 
 int test(void);
 
@@ -57,7 +63,10 @@ int main(void)
     //test_strToken();
     //test();
     
-    testFactorial();
+    //testFactorial();
+    //test_ExtendMemForString();
+    
+    test_bookInfo();
     
     return 0;
 }
@@ -509,7 +518,7 @@ int strToken(char *string, char *delim)
    char *token;
  
    // Establish string and get the first token:
-   token = strtok(string, delim); // C4996
+   token = strtok(string, delim);
    // Note: strtok is deprecated; consider using strtok_s instead
    while(token != NULL)
    {
@@ -517,7 +526,7 @@ int strToken(char *string, char *delim)
       printf(" %s\n", token);
 
       // Get next token: 
-      token = strtok(NULL, delim); // C4996
+      token = strtok(NULL, delim);
    }
 
    return 0;
@@ -555,6 +564,96 @@ int testFactorial(void)
     return 0;
 }
 
+#define EXT_STR_SIZE    5
+int ExtendMemForString(char **pStr, int strLen)
+{
+    int i = 0;
+    char *pNewStr = NULL;
+
+    /* malloc again */
+    pNewStr = (char *) malloc(sizeof(char) * (EXT_STR_SIZE + strLen));
+    if(pNewStr == NULL)
+        -1;
+
+    /* copy string */
+    for(i=0; i<strLen ; i++)
+    {
+        pNewStr[i] = (*pStr)[i];
+    }
+
+    /* free memory & replace to.. */
+    free(*pStr);
+    *pStr = pNewStr;
+    
+    /* return */
+    return (EXT_STR_SIZE + strLen);
+}
+
+int test_ExtendMemForString(void)
+{
+    int strLen = 5;
+    char *str = (char *) malloc(sizeof(char) * strLen);
+    
+    strcpy(str, "Best");
+    puts(str);
+    
+    strLen = ExtendMemForString(&str, strLen);
+    printf("extended string Length = %d\n", strLen);
+    strcat(str, " guys");
+    puts(str);
+    
+    return 0;
+}
+
+#define BOOK_INFO_LIST 2
+
+typedef struct __bookInfo {
+    char bookTitle[STR_LEN];
+    char bookPub[STR_LEN];
+    int bookPrice;
+} bookInfo;
+
+bookInfo bookInfoList[BOOK_INFO_LIST];
+
+
+int bookInfoStruct(void)
+{
+    int i;
+    
+    puts("Input Book Info.");
+    for(i=0 ; i<BOOK_INFO_LIST ; i++)
+    {
+        puts("Title:");
+        gets(bookInfoList[i].bookTitle);
+        
+        puts("Publisher:");
+        gets(bookInfoList[i].bookPub);
+        
+        puts("Price:");
+        scanf("%d", &bookInfoList[i].bookPrice);
+        fflush(stdin);
+    }
+    
+    puts("\nPrint Book Info.");
+    for(i=0 ; i<BOOK_INFO_LIST ; i++)
+    {
+        printf("List %d\n");
+        printf("Title: %s\n", bookInfoList[i].bookTitle);
+        printf("Publisher: %s\n", bookInfoList[i].bookPub);
+        printf("Price: %d\n", bookInfoList[i].bookPrice);
+    }
+    
+    
+    return 0;
+}
+
+
+int test_bookInfo(void)
+{
+    bookInfoStruct();
+
+    return 0;
+}
 
 
 int test(void)
